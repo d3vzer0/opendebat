@@ -11,6 +11,7 @@ class SpokenSegment(BaseModel):
     activiteit_titel: str
     spreker_voornaam: str
     spreker_achternaam: str
+    spreker: str
     tekst: str
     tijdstip_start: datetime
     tijdstip_eind: datetime
@@ -41,6 +42,7 @@ def flatten_speakers(
                     activiteit_titel=activiteit_titel,
                     spreker_voornaam=item.spreker.voornaam,
                     spreker_achternaam=item.spreker.achternaam,
+                    spreker=item.spreker.naam,
                     tekst=item.tekst_plain,
                     tijdstip_start=item.markeertijdbegin,
                     tijdstip_eind=item.markeertijdeind,
