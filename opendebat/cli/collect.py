@@ -15,4 +15,4 @@ def verslag():
         progress="enlighten",
     )
 
-    pipeline.run(tweedekamer())
+    pipeline.run(tweedekamer(), write_disposition="replace")

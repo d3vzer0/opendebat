@@ -2,20 +2,51 @@ from pydantic import BaseModel, Field, computed_field, PrivateAttr
 from datetime import datetime
 
 
+from dataclasses import dataclass
+from datetime import datetime
+
+
 # TODO: Dit moet vast beter kunnen maar yolo
 def parse_alinea(tekst):
     plaintext = ""
     if "alinea" in tekst:
         if isinstance(tekst["alinea"], list):
             for item in tekst["alinea"]:
-                if isinstance(item["alineaitem"], list):
-                    plaintext += item["alineaitem"][1]
-                elif isinstance(item["alineaitem"], str):
-                    plaintext += item["alineaitem"]
+                if "alineaitem" in item:
+                    if isinstance(item["alineaitem"], list):
+                        if isinstance(item["alineaitem"][1], str):
+                            plaintext += item["alineaitem"][1]
+                        # TODO: Handle this!
+                        # else:
+                        #     print(item["alineaitem"])
+                    elif isinstance(item["alineaitem"], str):
+                        plaintext += item["alineaitem"]
+
+                if "lijst" in item:
+                    if "alineaitem" in item["lijst"]:
+                        if isinstance(item["lijst"]["alineaitem"], list):
+                            for lijstitem in item["lijst"]["alineaitem"]:
+                                if isinstance(item["lijst"]["alineaitem"], str):
+                                    plaintext += lijstitem
+                                # TODO: HANDLE THIS
+                        if isinstance(item["lijst"]["alineaitem"], str):
+                            plaintext += item["lijst"]["alineaitem"]
+
+                #     plaintext += item["lijst"]["alineaitem"]
+                # else:
+                #     print(item)
 
         if isinstance(tekst["alinea"], dict):
             if isinstance(tekst["alinea"]["alineaitem"], list):
-                plaintext += tekst["alinea"]["alineaitem"][1]
+                if isinstance(tekst["alinea"]["alineaitem"][1], str):
+                    plaintext += tekst["alinea"]["alineaitem"][1]
+
+                # TODO: HANDLE THIS
+                # if isinstance(tekst["alinea"]["alineaitem"][1], dict):
+                #     if "nadruk" in tekst["alinea"]["alineaitem"][1]:
+
+                # else:
+                #     print(tekst["alinea"]["alineaitem"][1])
     return plaintext
 
 
@@ -25,23 +56,32 @@ class Spreker(BaseModel):
 
 
 class Interumpant(BaseModel):
-    tekst: dict = Field(exclude=True)
+    tekst: dict | None = Field(exclude=True, default=None)
     interrumpant: "Interumpant | list[Interumpant] | None" = None
+    spreker: Spreker | None = None
+    markeertijdbegin: datetime
+    markeertijdeind: datetime
 
     @computed_field
     def tekst_plain(self) -> str:
-        result = parse_alinea(self.tekst)
+        result = ""
+        if self.tekst:
+            result = parse_alinea(self.tekst)
         return result
 
 
 class Woordvoerder(BaseModel):
     spreker: Spreker
-    tekst: dict = Field(exclude=True)
+    tekst: dict | None = Field(exclude=True, default=None)
     interrumpant: "Interumpant | list[Interumpant] | None" = None
+    markeertijdbegin: datetime
+    markeertijdeind: datetime
 
     @computed_field
     def tekst_plain(self) -> str:
-        result = parse_alinea(self.tekst)
+        result = ""
+        if self.tekst:
+            result = parse_alinea(self.tekst)
         return result
 
 
@@ -56,7 +96,7 @@ class Activiteititem(BaseModel):
 class Activiteitdeel(BaseModel):
     # spreker:
     titel: str
-    activiteititem: Activiteititem
+    activiteititem: Activiteititem | None = None
 
 
 class Activiteithoofd(BaseModel):
