@@ -1,0 +1,24 @@
+version: 2
+sources:
+  - name: segments
+    schema: segments 
+    description: "Vergadering segments loaded by dbt"
+    tables:
+      - name: embeddings
+        description: "Embedding from verslagem"
+        columns:
+          - name: embedding
+            description: "Embedding"
+          - name: _dlt_id
+            description: "DLT unique identifier"
+          - name: _dlt_load_id
+            description: "DLT load batch identifier"
+
+      - name: segments
+        description: "Segments from verslagem"
+        columns:
+          - name: _dlt_id
+          - name: vergadering_titel
+          - name: spreker
+          - name: tijdstip_start
+          - name: tijdstip_eind

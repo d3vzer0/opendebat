@@ -1,0 +1,7 @@
+default:
+  target: segments
+  outputs:
+    segments:
+      type: duckdb
+      path: ./tweedekamer2.duckdb
+      schema: segments
