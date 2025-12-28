@@ -1,3 +1,10 @@
+
+# Virtual environments
+.venv
+*.duckdb
+.dlt
+test.*
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
