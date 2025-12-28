@@ -12,8 +12,7 @@ def verslag():
         pipeline_name="tweedekamer",
         destination="duckdb",
         dataset_name="debatten",
+        progress="enlighten",
     )
 
-    pipeline.run(
-        tweedekamer(),
-    )
+    pipeline.run(tweedekamer())

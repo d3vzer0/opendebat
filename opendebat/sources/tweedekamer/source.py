@@ -44,4 +44,4 @@ def tweedekamer():
         vergadering = document_content["vergadering"]
         yield vergadering
 
-    return vergaderingen, verslag, verslag_content
+    return (vergaderingen, verslag, verslag_content)
