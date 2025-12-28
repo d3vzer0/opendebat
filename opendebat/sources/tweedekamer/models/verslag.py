@@ -54,6 +54,10 @@ class Spreker(BaseModel):
     voornaam: str
     achternaam: str
 
+    @computed_field
+    def naam(self) -> str:
+        return f"{self.voornaam} {self.achternaam}"
+
 
 class Interumpant(BaseModel):
     tekst: dict | None = Field(exclude=True, default=None)

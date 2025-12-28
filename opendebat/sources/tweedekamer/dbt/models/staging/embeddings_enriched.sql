@@ -5,7 +5,7 @@
         "INSTALL vss;",
         "LOAD vss;",
         "SET GLOBAL hnsw_enable_experimental_persistence = true;",
-        "CREATE INDEX IF NOT EXISTS ip_idx ON {{ source('segments', 'embeddings') }} USING HNSW (embedding) WITH (metric = 'ip');"
+        "CREATE INDEX IF NOT EXISTS ip_idx ON {{ source('segments', 'segments_enriched') }} USING HNSW (embedding) WITH (metric = 'ip');"
     ]
     ) 
 }}

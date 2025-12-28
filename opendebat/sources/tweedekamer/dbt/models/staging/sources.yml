@@ -22,3 +22,14 @@ sources:
           - name: spreker
           - name: tijdstip_start
           - name: tijdstip_eind
+
+
+      - name: segments_enriched
+        description: "Segments with embeddings from verslagem"
+        columns:
+          - name: _dlt_id
+          - name: vergadering_titel
+          - name: spreker
+          - name: tijdstip_start
+          - name: tijdstip_eind
+          - name: embedding
